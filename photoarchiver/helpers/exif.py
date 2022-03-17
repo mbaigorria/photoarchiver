@@ -74,7 +74,7 @@ def get_exif_location_coordinates(exif_data: Dict) -> Coordinates:
     return lat, lon
 
 
-def get_exif_location(exif_data: Dict) -> Dict:
+def get_exif_location(exif_data: Dict) -> str:
     location_coordinates = get_exif_location_coordinates(exif_data)
 
     if location_coordinates[0] is None:
@@ -85,7 +85,7 @@ def get_exif_location(exif_data: Dict) -> Dict:
     if rounded_coordinates in _LOCATION_CACHE:
         return _LOCATION_CACHE[rounded_coordinates]
 
-    location = rg.search(location_coordinates)[0]
+    location = rg.search(location_coordinates)[0].replace("/", "")
     _LOCATION_CACHE[rounded_coordinates] = location
 
     return location
